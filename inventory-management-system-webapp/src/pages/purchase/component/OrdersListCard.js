@@ -6,11 +6,17 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import OrderToVendor from "./OrderToVendor";
+import Button from "@mui/material/Button";
+import CachedIcon from "@mui/icons-material/Cached";
 
 export default function OrdersListCard(props) {
   const theme = useTheme();
-  useNavigate();
+  const navigate = useNavigate();
   const [vendorsCount, setVendorsCount] = useState(null);
+
+  const buttonClick = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     if (props.orders.productItems) {
@@ -47,6 +53,23 @@ export default function OrdersListCard(props) {
               </Grid>
             );
           })}
+        <Grid
+          container
+          direction="row"
+          justifyContent={"center"}
+          sx={{ marginBottom: 5 }}
+        >
+          <Grid item>
+            <Button
+              onClick={buttonClick}
+              variant="contained"
+              color="success"
+              endIcon={<CachedIcon />}
+            >
+              Powrót do zamówień
+            </Button>
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );

@@ -15,6 +15,7 @@ public interface PurchaseProductItemNewAndEditMapper {
 
     @Mapping(target = "productItem", source = "productItem.productItemName")
     @Mapping(target = "vendor", source = "productItem.vendor.vendorName")
+    @Mapping(target = "popcMaterialCode", source = "productItem.popcMaterial.popcMaterialCode")
     @Mapping(target = "purchase", source = "purchase.id")
     PurchaseProductItemNewAndEditDto purchaseProductItemToPurchaseProductItemDto(PurchaseProductItem purchaseProductItem);
 

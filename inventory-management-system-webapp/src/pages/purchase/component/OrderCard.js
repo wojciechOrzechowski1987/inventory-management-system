@@ -24,8 +24,6 @@ export default function OrderCard(props) {
     },
   });
 
-  // JEST DOSTEP DO DEMANDA console.log(props.demand);
-
   const { fields, append, remove } = useFieldArray({
     keyName: "key",
     control,

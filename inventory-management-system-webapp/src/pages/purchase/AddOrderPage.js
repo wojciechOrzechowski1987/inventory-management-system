@@ -32,25 +32,25 @@ export default function AddOrderPage() {
     data: vendors,
   } = useGet("http://localhost:8080/vendor/purchase");
 
+  /*
   const {
     error: errorDemand,
     isPending: isPendingDemand,
     data: demand,
   } = useGet("http://localhost:8080/demand/id/" + 1);
+*/
 
   return (
     <React.Fragment>
       {isPendingProjects &&
         isPendingVendors &&
-        isPendingDemand &&
         isPendingPopcMaterials &&
         isPendingProductItems && <CircularProgress color="success" />}
       {(errorProjects ||
-        errorDemand ||
         errorProductItems ||
         errorVendos ||
         errorPopcMaterials) && <ErrorPage />}
-      {projects && vendors && demand && popcMaterials && productItems && (
+      {projects && vendors && popcMaterials && productItems && (
         <Grid container direction="column" alignItems={"center"}>
           <Grid item marginTop={2} marginBottom={2}>
             <Typography>NOWE ZAMÓWIENIE</Typography>
@@ -59,7 +59,6 @@ export default function AddOrderPage() {
             <OrderForm
               projects={projects}
               vendors={vendors}
-              demand={demand}
               popcMaterials={popcMaterials}
               productItems={productItems}
             />

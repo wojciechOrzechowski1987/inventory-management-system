@@ -2,12 +2,14 @@ package com.worzech.inventorymanagementsystem;
 
 import com.worzech.inventorymanagementsystem.domain.*;
 import com.worzech.inventorymanagementsystem.domain.security.Role;
+import com.worzech.inventorymanagementsystem.enums.Status;
 import com.worzech.inventorymanagementsystem.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @SpringBootApplication
 public class InventoryManagementSystemApplication {
@@ -50,7 +52,7 @@ public class InventoryManagementSystemApplication {
             districtRepository.save(slawno);
             districtRepository.save(new District("Telekom Optic", admin.getUsername()));
 
-            projectRepository.save(new Project("1001", "BIAŁ_BIA_BIAŁOGARD_OLT_1", districtRepository.getById(1L)));
+            projectRepository.save(new Project("1001", "BIAŁ_BIA_BIAŁOGARD_OLT_1", districtRepository.getById(1L), Status.DEMAND));
             projectRepository.save(new Project("1002", "BIAŁ_BIA_BIAŁOGARD_SZKOŁA_1", districtRepository.getById(1L)));
             projectRepository.save(new Project("1003", "BIAŁ_BIA_STANOMINO_SZKOŁA_1", districtRepository.getById(1L)));
             projectRepository.save(new Project("1004", "BIAŁ_BIA_POMIANOWO_SZKOŁA_1", districtRepository.getById(1L)));
@@ -409,9 +411,8 @@ public class InventoryManagementSystemApplication {
             productItemRepository.save(new ProductItem("AROT MM NOVOFIT ZŁACZKA 14", 6.29, popcMaterialRepository.getById(14L), vendorRepository.getById(5L)));
 
 
-          /*  demandRepository.save(new Demand("010001_A", projectRepository.getById(1L)));
-            demandRepository.save(new Demand("010001_B", projectRepository.getById(1L)));
-
+            demandRepository.save(new Demand("010001_A", projectRepository.getById(1L), Status.DEMAND));
+            demandRepository.save(new Demand("010001_B", projectRepository.getById(1L), Status.ORDERED));
 
             demandPopcMaterialRepository.save(new DemandPopcMaterial(1, popcMaterialRepository.getById(16L), demandRepository.getById(1L)));
             demandPopcMaterialRepository.save(new DemandPopcMaterial(2, popcMaterialRepository.getById(17L), demandRepository.getById(1L)));
@@ -421,9 +422,9 @@ public class InventoryManagementSystemApplication {
             demandPopcMaterialRepository.save(new DemandPopcMaterial(6, popcMaterialRepository.getById(21L), demandRepository.getById(1L)));
             demandPopcMaterialRepository.save(new DemandPopcMaterial(1, popcMaterialRepository.getById(16L), demandRepository.getById(2L)));
 
-            purchaseRepository.save(new Purchase(demandRepository.getById(1L)));
+            purchaseRepository.save(new Purchase(demandRepository.getById(2L)));
 
-            purchaseProductItemRepository.save(new PurchaseProductItem(1, productItemRepository.getById(1L), purchaseRepository.getById(1L)));*/
+            purchaseProductItemRepository.save(new PurchaseProductItem(1, productItemRepository.getById(1L), purchaseRepository.getById(1L)));
 
 
         };

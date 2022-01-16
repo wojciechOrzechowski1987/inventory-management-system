@@ -38,9 +38,10 @@ public class Demand {
     private List<Purchase> purchases = new ArrayList<>();
 
 
-    public Demand(String demandName, Project project) {
+    public Demand(String demandName, Project project, Status demandStatus) {
         this.demandName = demandName;
         this.project = project;
+        this.demandStatus = demandStatus;
     }
 
     public Demand(Project project) {

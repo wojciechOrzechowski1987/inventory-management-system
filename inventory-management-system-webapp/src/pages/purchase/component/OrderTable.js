@@ -12,13 +12,10 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import Button from "@mui/material/Button";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
+import PreviewIcon from "@mui/icons-material/Preview";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
@@ -283,6 +280,9 @@ export default function OrderTable(props) {
                           {row.project}_{row.demand}
                         </Typography>
                       </TableCell>
+                      <TableCell align="left">
+                        <Typography>{row.vendorName}</Typography>
+                      </TableCell>
                       <TableCell>
                         <Stack
                           direction="row"
@@ -294,24 +294,24 @@ export default function OrderTable(props) {
                             variant="contained"
                             color="error"
                             endIcon={<DeleteForeverIcon />}
-                            onClick={() => deleteEntry(row.id, row.orderDate)}
+                            onClick={() => deleteEntry(row.id)}
                           >
                             Usuń
                           </Button>
                           <Button
                             component={Link}
                             to={{
-                              pathname: "editDemand/" + row.id,
-                              state: {
-                                id: row.id,
-                              },
+                              pathname: "editOrder/" + row.id,
+                            }}
+                            state={{
+                              editedOrder: row,
                             }}
                             size="small"
                             variant="contained"
                             color="info"
-                            endIcon={<EditIcon />}
+                            endIcon={<PreviewIcon />}
                           >
-                            Edytuj
+                            Podgląd
                           </Button>
                         </Stack>
                       </TableCell>
@@ -338,9 +338,9 @@ export default function OrderTable(props) {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          labelRowsPerPage="Produktów na stronę:"
+          labelRowsPerPage="Zamówień na stronę:"
           labelDisplayedRows={({ from, to, count }) =>
-            `Wyświetlono ${from}-${to} produktów z ${count}`
+            `Wyświetlono ${from}-${to} zamówień z ${count}`
           }
         />
       </Paper>

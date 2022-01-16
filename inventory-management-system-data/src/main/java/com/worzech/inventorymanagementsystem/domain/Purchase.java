@@ -1,5 +1,6 @@
 package com.worzech.inventorymanagementsystem.domain;
 
+import com.worzech.inventorymanagementsystem.enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,16 +22,18 @@ public class Purchase {
 
     private Date orderDate = new Date();
 
+    private String vendorName;
+
+    private Status purchaseStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Demand demand;
 
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PurchaseProductItem> productItems = new ArrayList<>();
 
-
     public Purchase(Demand demand) {
         this.demand = demand;
-
     }
 
     public void addProductItemToPurchase(PurchaseProductItem productItem) {

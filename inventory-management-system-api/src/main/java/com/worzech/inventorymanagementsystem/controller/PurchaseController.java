@@ -38,19 +38,11 @@ public class PurchaseController {
         return purchaseService.createNewPurchase(purchaseDto);
     }
 
-
-
-   /* @PostMapping(path= "newDemand", consumes ="application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public DemandNewAndEditDto createNewDemand(@RequestBody DemandNewAndEditDto demandDto) {
-        return demandService.createNewDemand(demandDto);
+    @PutMapping(path = "/editPurchase/{id}", consumes = "application/json")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public PurchaseDto editDemand(@PathVariable Long id, @RequestBody PurchaseDto purchaseDto) {
+        return purchaseService.updatePurchase(id, purchaseDto);
     }
-
-    @PutMapping(path="/editDemand/{id}", consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public DemandNewAndEditDto editDemand (@PathVariable Long id, @RequestBody DemandNewAndEditDto demandDto) {
-        return demandService.updateDemand(id, demandDto);
-    }*/
 
     @DeleteMapping("/delete/{orderId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

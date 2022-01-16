@@ -52,7 +52,6 @@ const AllDemandPage = () => {
       {demands &&
         demands.forEach((a) => {
           a.search = true;
-          console.log(a);
         })}
       {demands && (
         <Grid container direction="column" alignItems={"center"}>

@@ -28,11 +28,12 @@ import AddProductItemPage from "./pages/productItem/AddProductItemPage";
 import AllDemandPage from "./pages/demand/AllDemandPage";
 import AddDemandPage from "./pages/demand/AddDemandPage";
 import EditDemandPage from "./pages/demand/EditDemandPage";
-import AllPurchasePage from "./pages/purchase/AllPurchasePage";
+import AllOrderPage from "./pages/purchase/AllOrderPage";
 import AddOrderPage from "./pages/purchase/AddOrderPage";
 import LoginPage from "./pages/login/LoginPage";
 import AuthContext from "./auth/AuthContex";
 import Box from "@mui/material/Box";
+import EditOrderPage from "./pages/purchase/EditOrderPage";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -80,8 +81,9 @@ function App() {
             element={<EditDemandPage />}
           />
 
-          <Route path="/order" element={<AllPurchasePage />} />
+          <Route path="/order" element={<AllOrderPage />} />
           <Route path="/order/newOrder" element={<AddOrderPage />} />
+          <Route path="/order/editOrder/:orderId" element={<EditOrderPage />} />
 
           <Route path="/report" element={<div>Raporty</div>} />
 

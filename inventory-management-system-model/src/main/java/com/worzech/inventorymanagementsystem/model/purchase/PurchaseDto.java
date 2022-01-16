@@ -16,6 +16,7 @@ public class PurchaseDto {
     private Long id;
     private String orderDate;
     private String demand;
+    private String vendorName;
     private String project;
     private List<PurchaseProductItemNewAndEditDto> productItems = new ArrayList<>();
 

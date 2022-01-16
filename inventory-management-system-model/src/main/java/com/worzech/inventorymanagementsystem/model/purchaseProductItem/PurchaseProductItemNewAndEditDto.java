@@ -12,6 +12,7 @@ public class PurchaseProductItemNewAndEditDto {
     private Long id;
     private Integer quantity;
     private String productItem;
+    private String popcMaterialCode;
     private String vendor;
     private String purchase;
 

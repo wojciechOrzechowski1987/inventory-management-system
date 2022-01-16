@@ -3,9 +3,6 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import useGet from "../../hooks/Get";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
-import AddBoxIcon from "@mui/icons-material/AddBox";
 import OrderTable from "./component/OrderTable";
 import ErrorPage from "../errorPage/ErrorPage";
 import Typography from "@mui/material/Typography";
@@ -22,12 +19,17 @@ const headCells = [
     sortable: true,
   },
   {
+    id: "vendorName",
+    label: "Dostawca",
+    sortable: true,
+  },
+  {
     id: "action",
     label: "AKCJE",
   },
 ];
 
-const AllPurchasePage = () => {
+const AllOrderPage = () => {
   const {
     error: errorPurchases,
     isPending: isPendingPurchases,
@@ -61,4 +63,4 @@ const AllPurchasePage = () => {
   );
 };
 
-export default AllPurchasePage;
+export default AllOrderPage;

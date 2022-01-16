@@ -10,6 +10,8 @@ public interface PurchaseService {
 
     PurchaseDto createNewPurchase(PurchaseDto purchaseDto);
 
+    PurchaseDto updatePurchase(Long id, PurchaseDto purchaseDto);
+
     PurchaseDto getPurchaseById(Long id);
 
     void deletePurchaseById(Long id);

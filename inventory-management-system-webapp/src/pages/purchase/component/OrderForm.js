@@ -8,11 +8,13 @@ import OrdersListCard from "./OrdersListCard";
 export default function OrderForm(props) {
   useNavigate();
   const [selectedDemand, setSelectedDemand] = useState(false);
+  const [demandName, setDemandName] = useState("");
   const [orderDataComplete, setOrderDataComplete] = useState(false);
   const [orderData, setOrderData] = useState([]);
 
-  const selectedDemandHandler = (isSelectedDemandSet) => {
+  const selectedDemandHandler = (isSelectedDemandSet, selectedDemandName) => {
     setSelectedDemand(isSelectedDemandSet);
+    setDemandName(selectedDemandName);
   };
 
   const orderHandler = (isOrderDataSet, data) => {
@@ -25,17 +27,15 @@ export default function OrderForm(props) {
       <Grid item>
         <DemandCard
           projects={props.projects}
-          demand={props.demand}
           popcMaterials={props.popcMaterials}
           onDemandSet={selectedDemandHandler}
         />
       </Grid>
-      {selectedDemand && (
+      {selectedDemand && demandName !== "" && (
         <Grid item sx={{ minWidth: 1500 }}>
           <OrderCard
             projects={props.projects}
             vendors={props.vendors}
-            demand={props.demand}
             popcMaterials={props.popcMaterials}
             productItems={props.productItems}
             onOrderSet={orderHandler}
@@ -47,7 +47,7 @@ export default function OrderForm(props) {
           <OrdersListCard
             orders={orderData}
             isdemand={selectedDemand}
-            demand={props.demand}
+            demand={demandName}
           />
         </Grid>
       )}

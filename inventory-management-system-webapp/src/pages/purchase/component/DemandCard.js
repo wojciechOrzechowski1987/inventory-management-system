@@ -49,19 +49,21 @@ export default function DemandCard(props) {
             />
             {selectedProject && (
               <Autocomplete
-                options={selectedProject.demands}
+                options={selectedProject.demands.filter(
+                  (demand) => demand.demandStatus !== "Zamówiony"
+                )}
                 getOptionLabel={(option) => option.demandName}
                 onChange={(event, value) => {
                   if (value !== null) {
                     setSelectedDemand(value.demandPopcMaterials);
-                    props.onDemandSet(true);
+                    props.onDemandSet(true, value.demandName);
                   } else {
                     setSelectedDemand(null);
-                    props.onDemandSet(false);
+                    props.onDemandSet(false, "");
                   }
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Zapotrzebowania" />
+                  <TextField {...params} label="Zapotrzebowanie" />
                 )}
               />
             )}
