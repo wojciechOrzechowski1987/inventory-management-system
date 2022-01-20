@@ -47,18 +47,21 @@ const AllDistrictPage = () => {
             justifyContent="center"
             gap={2}
           >
-            {districts.map((district, index) => (
-              <Grid item>
-                <DistrictCard
-                  key={`${district}${index}`}
-                  district={district}
-                  projectStatus={projectStatus}
-                />
-              </Grid>
-            ))}
+            {districts
+              .sort((a, b) => a.districtName.localeCompare(b.districtName))
+              .map((district, index) => (
+                <Grid item>
+                  <DistrictCard
+                    key={`${district}${index}`}
+                    district={district}
+                    projectStatus={projectStatus}
+                  />
+                </Grid>
+              ))}
             {authCtx.authorities.includes("ROLE_ADMIN") && (
               <Grid item>
                 <Card
+                  key={"new"}
                   sx={{
                     display: "flex",
                     backgroundColor: theme.palette.primary.light,

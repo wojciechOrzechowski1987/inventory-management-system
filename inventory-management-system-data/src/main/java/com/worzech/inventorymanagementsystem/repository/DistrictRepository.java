@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface DistrictRepository extends JpaRepository<District, Long> {
 
     @Override
+    @Query("SELECT DISTINCT o FROM District o fetch all properties ")
     @NonNull
-    @Query("SELECT DISTINCT o FROM District o join fetch o.projects")
     List<District> findAll();
 
     @Query("SELECT o FROM District o WHERE o.owner = ?#{authentication.name}")
