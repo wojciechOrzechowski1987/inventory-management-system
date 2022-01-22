@@ -53,7 +53,6 @@ export default function DistrictForm(props) {
           },
         })
         .then((response) => {
-          console.log(response);
           navigate(-1);
         })
         .catch((error) => {
@@ -64,8 +63,9 @@ export default function DistrictForm(props) {
                 setDistrictNameErrorMessage(fieldError.message);
               }
             });
-          } else {
-            console.log(error.message);
+          } else if (error.response.data) {
+            setDistrictNameError(true);
+            setDistrictNameErrorMessage(error.response.data);
           }
         });
     } else {

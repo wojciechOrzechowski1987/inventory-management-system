@@ -105,6 +105,7 @@ public class DemandServiceImp implements DemandService {
             removeDemandFromProject(oldProject, oldProject.getDemands(), demand);
             Project newProject = projectRepository.getProjectByProjectName(demandNewAndEditDto.getProjectName());
             demand.setProject(newProject);
+            demand.setDemandName(newProject.getProjectCode() + "_" + String.valueOf((char) ('A' + newProject.getDemands().size())));
             newProject.addDemandToProject(demand);
         }
 

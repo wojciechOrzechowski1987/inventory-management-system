@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -81,7 +82,7 @@ public class ProjectController {
     @PostMapping(path = "/newProject", consumes = "application/json")
     @PreAuthorize("hasAuthority('project:write')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProjectNewAndEditDto createNewProject(@RequestBody ProjectNewAndEditDto projectDto) {
+    public ProjectNewAndEditDto createNewProject(@Valid @RequestBody ProjectNewAndEditDto projectDto) {
         return projectService.createNewProject(projectDto);
     }
 

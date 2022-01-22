@@ -30,6 +30,13 @@ export default function ProjectForm(props) {
     props.project.status
   );
 
+  const [projectNameError, setProjectNameError] = React.useState(false);
+  const [projectNameErrorMessage, setProjectNameErrorMessage] =
+    React.useState("");
+  const [projectCodeError, setProjectCodeError] = React.useState(false);
+  const [projectCodeErrorMessage, setProjectCodeErrorMessage] =
+    React.useState("");
+
   const authCtx = useContext(AuthContext);
 
   const theme = useTheme();
@@ -54,6 +61,23 @@ export default function ProjectForm(props) {
         })
         .then(() => {
           navigate(-1);
+        })
+        .catch((error) => {
+          if (error.response.data.fieldErrors) {
+            error.response.data.fieldErrors.forEach((fieldError) => {
+              if (fieldError.field === "projectName") {
+                setProjectNameError(true);
+                setProjectNameErrorMessage(fieldError.message);
+              }
+              if (fieldError.field === "projectCode") {
+                setProjectCodeError(true);
+                setProjectCodeErrorMessage(fieldError.message);
+              }
+            });
+          } else if (error.response.data) {
+            setProjectNameError(true);
+            setProjectNameErrorMessage(error.response.data);
+          }
         });
     } else {
       axios
@@ -96,6 +120,8 @@ export default function ProjectForm(props) {
             <Grid item>
               <TextField
                 id="filled-search"
+                error={projectNameError}
+                helperText={projectNameErrorMessage}
                 label="Nazwa projektu"
                 name="projectName"
                 value={projectName}
@@ -105,6 +131,8 @@ export default function ProjectForm(props) {
             <Grid item>
               <TextField
                 id="filled-search"
+                error={projectCodeError}
+                helperText={projectCodeErrorMessage}
                 label="Kod projektu"
                 name="projectCode"
                 value={projectCode}

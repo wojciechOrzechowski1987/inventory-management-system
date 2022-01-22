@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,9 +19,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    @NotBlank
     private String projectCode;
-    @NotBlank
     @Column(unique = true)
     private String projectName;
     @Enumerated(EnumType.STRING)

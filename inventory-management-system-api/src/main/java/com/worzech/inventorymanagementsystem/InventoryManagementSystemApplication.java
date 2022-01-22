@@ -411,8 +411,8 @@ public class InventoryManagementSystemApplication {
             productItemRepository.save(new ProductItem("AROT MM NOVOFIT ZŁACZKA 14", 6.29, popcMaterialRepository.getById(14L), vendorRepository.getById(5L)));
 
 
-            demandRepository.save(new Demand("010001_A", projectRepository.getById(1L), Status.DEMAND));
-            demandRepository.save(new Demand("010001_B", projectRepository.getById(1L), Status.ORDERED));
+            demandRepository.save(new Demand("1001_A", projectRepository.getById(1L), Status.DEMAND));
+            demandRepository.save(new Demand("1001_B", projectRepository.getById(1L), Status.ORDERED));
 
             demandPopcMaterialRepository.save(new DemandPopcMaterial(1, popcMaterialRepository.getById(16L), demandRepository.getById(1L)));
             demandPopcMaterialRepository.save(new DemandPopcMaterial(2, popcMaterialRepository.getById(17L), demandRepository.getById(1L)));

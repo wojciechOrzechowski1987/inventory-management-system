@@ -35,9 +35,9 @@ export default function EditDemandPage() {
         <Grid container direction="column" alignItems={"center"}>
           <Grid item marginTop={2} marginBottom={2}>
             {authCtx.authorities.includes("ROLE_ADMIN") ? (
-              <Typography>EDYCJA PROJEKTU</Typography>
+              <Typography>EDYCJA ZAPOTRZEBOWANIA</Typography>
             ) : (
-              <Typography>PODGLĄD PROJEKTU</Typography>
+              <Typography>PODGLĄD ZAPOTRZEBOWANIA</Typography>
             )}
           </Grid>
           <Grid item>

@@ -1,8 +1,11 @@
 package com.worzech.inventorymanagementsystem.exceptions;
 
+import lombok.NonNull;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,12 +20,28 @@ import java.util.List;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<Object> handleNotFoundException(Exception exception, WebRequest request) {
-        return new ResponseEntity<>("Zasób nie odnaleziony", new HttpHeaders(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<Object> handleExceptions(Exception exception, WebRequest request) {
+        String body;
+        HttpStatus status;
+        if (exception.getClass().equals(BadCredentialsException.class)) {
+            body = "Złe poświadczenia";
+            status = HttpStatus.UNAUTHORIZED;
+        } else  if (exception.getClass().equals(DataIntegrityViolationException.class)){
+            body = "Nazwa istnieje w bazie";
+            status = HttpStatus.NOT_ACCEPTABLE;
+        }else {
+            body = "Zasób nie odnaleziony";
+            status = HttpStatus.NOT_FOUND;
+        }
+        System.out.println(body);
+
+        return new ResponseEntity<>(body, new HttpHeaders(), status);
     }
 
+
+
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected @NonNull ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         FieldErrorResponse fieldErrorResponse = new FieldErrorResponse();
 
         List<CustomFieldError> fieldErrors = new ArrayList<>();

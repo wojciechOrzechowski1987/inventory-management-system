@@ -19,12 +19,10 @@ const useGet = (url) => {
         .then((response) => {
           setIsPending(false);
           setData(response.data);
-          console.log(response.data);
           setError(false);
         })
         .catch((err) => {
           setIsPending(false);
-          console.log(err.message);
           setError(true);
         });
     }, 1000);

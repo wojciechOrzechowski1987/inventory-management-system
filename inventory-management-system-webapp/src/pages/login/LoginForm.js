@@ -46,6 +46,7 @@ export default function LoginForm() {
         }
       })
       .catch((error) => {
+        console.log(error.response);
         if (error.response.data) {
           setLoginError(true);
           setLoginErrorMessage(error.response.data);
