@@ -75,7 +75,7 @@ public class DemandServiceImp implements DemandService {
     private DemandNewAndEditDto saveAndReturnDto(Demand demand) {
         Demand newDemand = new Demand();
         Project project = projectRepository.findProjectByProjectName(demand.getProject().getProjectName()).orElseThrow(ResourceNotFoundException::new);
-        newDemand.setDemandName(project.getProjectCode() + "_" + String.valueOf((char) ('A' + project.getDemands().size())));
+        newDemand.setDemandName(project.getProjectCode() + "_" + (char) ('A' + project.getDemands().size()));
         demand.getDemandPopcMaterials().forEach(demandPopcMaterial -> newDemand.addDemandPopcMaterial(
                 new DemandPopcMaterial(
                         demandPopcMaterial.getQuantity(),
@@ -100,12 +100,13 @@ public class DemandServiceImp implements DemandService {
     private DemandNewAndEditDto updateAndReturnDto(Long id, DemandNewAndEditDto demandNewAndEditDto) {
 
         Demand demand = demandRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+
         if (!demand.getProject().getProjectName().equals(demandNewAndEditDto.getProjectName())) {
             Project oldProject = demand.getProject();
             removeDemandFromProject(oldProject, oldProject.getDemands(), demand);
             Project newProject = projectRepository.getProjectByProjectName(demandNewAndEditDto.getProjectName());
             demand.setProject(newProject);
-            demand.setDemandName(newProject.getProjectCode() + "_" + String.valueOf((char) ('A' + newProject.getDemands().size())));
+            demand.setDemandName(newProject.getProjectCode() + "_M_" + demand.getDemandName());
             newProject.addDemandToProject(demand);
         }
 
@@ -123,10 +124,12 @@ public class DemandServiceImp implements DemandService {
 
 
     private void removeDemandFromProject(Project project, Set<Demand> set, Demand demand) {
-        for (Demand element : set) {
-            if (element.equals(demand)) {
-                project.removeDemandFromProject(element);
-                demandRepository.save(element);
+        for(Iterator<Demand> i = set.iterator(); i.hasNext(); ) {
+            Demand demandInSet = i.next();
+            if (demandInSet.equals(demand)) {
+                project.removeDemandFromProject(demandInSet);
+                i.remove();
+                //demandRepository.save(demandInSet);
             }
         }
     }

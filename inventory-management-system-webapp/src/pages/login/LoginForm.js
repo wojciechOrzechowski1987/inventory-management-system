@@ -40,16 +40,16 @@ export default function LoginForm() {
             response.data
           );
           navigate("/district", { replace: true });
-        } else {
-          let errorMessage = "Authentication failed!";
-          throw new Error(errorMessage);
         }
       })
       .catch((error) => {
-        console.log(error.response);
-        if (error.response.data) {
-          setLoginError(true);
-          setLoginErrorMessage(error.response.data);
+        if (error.response.data.fieldErrors) {
+          error.response.data.fieldErrors.forEach((fieldError) => {
+            if (fieldError.field === "credentials") {
+              setLoginError(true);
+              setLoginErrorMessage(fieldError.message);
+            }
+          });
         } else {
           console.log(error.message);
         }

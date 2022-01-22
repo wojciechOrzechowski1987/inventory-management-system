@@ -58,7 +58,7 @@ public class Project {
 
     public void removeDemandFromProject(Demand demand) {
         demand.setProject(null);
-        demands.remove(demand);
+        //demands.remove(demand);
         projectStatusControl();
     }
 

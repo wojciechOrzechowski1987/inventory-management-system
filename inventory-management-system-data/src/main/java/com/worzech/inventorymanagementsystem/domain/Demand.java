@@ -20,21 +20,15 @@ public class Demand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(unique = true)
     @NotBlank
     private String demandName;
-
     private Date createDate = new Date();
-
     private Status demandStatus;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
-
     @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DemandPopcMaterial> demandPopcMaterials = new ArrayList<>();
-
     @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Purchase> purchases = new ArrayList<>();
 

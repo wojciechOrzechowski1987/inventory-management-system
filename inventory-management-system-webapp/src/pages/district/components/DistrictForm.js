@@ -35,6 +35,8 @@ export default function DistrictForm(props) {
 
   const submitDistrict = (event) => {
     event.preventDefault();
+    setDistrictNameError(false);
+    setDistrictNameErrorMessage("");
 
     const districtpost = {
       districtName: districtName,
@@ -59,6 +61,10 @@ export default function DistrictForm(props) {
           if (error.response.data.fieldErrors) {
             error.response.data.fieldErrors.forEach((fieldError) => {
               if (fieldError.field === "districtName") {
+                setDistrictNameError(true);
+                setDistrictNameErrorMessage(fieldError.message);
+              }
+              if (fieldError.field === "unique") {
                 setDistrictNameError(true);
                 setDistrictNameErrorMessage(fieldError.message);
               }

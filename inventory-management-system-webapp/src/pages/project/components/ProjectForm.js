@@ -44,6 +44,10 @@ export default function ProjectForm(props) {
 
   const submitProject = (event) => {
     event.preventDefault();
+    setProjectCodeError(false);
+    setProjectNameError(false);
+    setProjectCodeErrorMessage("");
+    setProjectNameErrorMessage("");
 
     const project = {
       projectCode: projectCode,
@@ -72,6 +76,16 @@ export default function ProjectForm(props) {
               if (fieldError.field === "projectCode") {
                 setProjectCodeError(true);
                 setProjectCodeErrorMessage(fieldError.message);
+              }
+              if (fieldError.field === "unique") {
+                setProjectNameError(true);
+                setProjectCodeError(true);
+                setProjectNameErrorMessage(
+                  "Nazwa lub kod projektu istnieje w bazie"
+                );
+                setProjectCodeErrorMessage(
+                  "Nazwa lub kod projektu istnieje w bazie"
+                );
               }
             });
           } else if (error.response.data) {

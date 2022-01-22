@@ -20,22 +20,30 @@ import java.util.List;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<Object> handleExceptions(Exception exception, WebRequest request) {
-        String body;
+    public ResponseEntity<Object> handleExceptions(Exception ex, WebRequest request) {
         HttpStatus status;
-        if (exception.getClass().equals(BadCredentialsException.class)) {
-            body = "Złe poświadczenia";
+        FieldErrorResponse fieldErrorResponse = new FieldErrorResponse();
+        List<CustomFieldError> fieldErrors = new ArrayList<>();
+        CustomFieldError fieldError = new CustomFieldError();
+        if (ex.getClass().equals(BadCredentialsException.class)) {
+           fieldError.setField("credentials");
+           fieldError.setMessage("Złe poświadczenia");
+           fieldErrors.add(fieldError);
             status = HttpStatus.UNAUTHORIZED;
-        } else  if (exception.getClass().equals(DataIntegrityViolationException.class)){
-            body = "Nazwa istnieje w bazie";
+        } else  if (ex.getClass().equals(DataIntegrityViolationException.class)){
+            fieldError.setField("unique");
+            fieldError.setMessage("Nazwa istnieje w bazie");
+            fieldErrors.add(fieldError);
             status = HttpStatus.NOT_ACCEPTABLE;
         }else {
-            body = "Zasób nie odnaleziony";
+            fieldError.setField("noData");
+            fieldError.setMessage("Zasób nie odnaleziony");
+            fieldErrors.add(fieldError);
             status = HttpStatus.NOT_FOUND;
         }
-        System.out.println(body);
+        fieldErrorResponse.setFieldErrors(fieldErrors);
 
-        return new ResponseEntity<>(body, new HttpHeaders(), status);
+        return new ResponseEntity<>(fieldErrorResponse, status);
     }
 
 
