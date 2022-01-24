@@ -15,12 +15,9 @@ public class PurchaseProductItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Integer quantity;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductItem productItem;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Purchase purchase;
 

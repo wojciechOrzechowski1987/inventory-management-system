@@ -105,7 +105,7 @@ public class DistrictServiceImp implements DistrictService {
     private DistrictNewAndEditDto updateAndReturnDto(Long id, DistrictNewAndEditDto districtNewAndEditDto) {
         District district = districtRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         district.setDistrictName(districtNewAndEditDto.getDistrictName());
-        iterateProjectsInDistrict(district, district.getProjects());
+        removeProjectsFromDistrict(district, district.getProjects());
         if (districtNewAndEditDto.getProjects().size() != 0) {
             districtNewAndEditDto.getProjects().iterator().forEachRemaining(project -> district
                     .addProjectToDistrict(projectRepository
@@ -116,7 +116,7 @@ public class DistrictServiceImp implements DistrictService {
         return districtNewAndEditMapper.toDistrictDto(district);
     }
 
-    private void iterateProjectsInDistrict(District district, Set<Project> set) {
+    private void removeProjectsFromDistrict(District district, Set<Project> set) {
         for (Iterator<Project> i = set.iterator(); i.hasNext(); ) {
             Project element = i.next();
             district.removeProjectFromDistrictIterate(element);

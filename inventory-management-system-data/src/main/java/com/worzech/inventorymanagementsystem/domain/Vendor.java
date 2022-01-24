@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +19,6 @@ public class Vendor {
     @GeneratedValue
     private Long id;
     @Column(unique = true)
-    @NotBlank
     private String vendorName;
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ProductItem> productItems = new HashSet<>();

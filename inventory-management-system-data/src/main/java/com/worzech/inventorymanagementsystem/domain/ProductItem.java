@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +18,6 @@ public class ProductItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    @NotBlank
     private String productItemName;
     private Double price;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,7 +25,7 @@ public class ProductItem {
     @ManyToOne(fetch = FetchType.LAZY)
     private Vendor vendor;
     @OneToMany(mappedBy = "productItem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PurchaseProductItem> purchaseProductItem;
+    private List<PurchaseProductItem> purchaseProductItem = new ArrayList<>();
 
     public ProductItem(String productItemName, Double price, PopcMaterial popcMaterial) {
         this.productItemName = productItemName;

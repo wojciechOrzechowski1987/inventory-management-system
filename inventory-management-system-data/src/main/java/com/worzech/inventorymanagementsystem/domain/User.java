@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Getter
@@ -16,8 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Table(name = "IMSUser")
 
-// implement Serializable - może trzeba dodac
-public class User implements Serializable {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

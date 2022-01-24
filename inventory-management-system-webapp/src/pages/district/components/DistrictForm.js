@@ -23,7 +23,7 @@ export default function DistrictForm(props) {
     props.district.districtName
   );
   const authCtx = useContext(AuthContext);
-  const [projects, setProjects] = React.useState([]);
+  const [projects, setProjects] = React.useState(props.district.projects);
   const selectableProjects = props.selectableProjects;
 
   const [districtNameError, setDistrictNameError] = React.useState(false);
@@ -75,6 +75,7 @@ export default function DistrictForm(props) {
           }
         });
     } else {
+      console.log(district);
       axios
         .put(
           "http://localhost:8080/district/editDistrict/" + props.district.id,
@@ -85,11 +86,25 @@ export default function DistrictForm(props) {
             },
           }
         )
-        .then((response) => {
-          return response.data;
-        })
         .then(() => {
           navigate(-1);
+        })
+        .catch((error) => {
+          if (error.response.data.fieldErrors) {
+            error.response.data.fieldErrors.forEach((fieldError) => {
+              if (fieldError.field === "districtName") {
+                setDistrictNameError(true);
+                setDistrictNameErrorMessage(fieldError.message);
+              }
+              if (fieldError.field === "unique") {
+                setDistrictNameError(true);
+                setDistrictNameErrorMessage(fieldError.message);
+              }
+            });
+          } else if (error.response.data) {
+            setDistrictNameError(true);
+            setDistrictNameErrorMessage(error.response.data);
+          }
         });
     }
   };

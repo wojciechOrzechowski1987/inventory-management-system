@@ -53,7 +53,7 @@ public class DistrictController {
 
     @PutMapping(path = "/editDistrict/{id}", consumes = "application/json")
     @PreAuthorize("hasAuthority('district:update')")
-    public DistrictNewAndEditDto editDistrict(@PathVariable Long id, @RequestBody DistrictNewAndEditDto districtNewAndEditDto) {
+    public DistrictNewAndEditDto editDistrict(@PathVariable Long id,@Valid @RequestBody DistrictNewAndEditDto districtNewAndEditDto) {
         return districtService.updateDistrict(id, districtNewAndEditDto);
     }
 }
