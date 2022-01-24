@@ -1,12 +1,13 @@
 package com.worzech.inventorymanagementsystem.service.user;
 
 import com.worzech.inventorymanagementsystem.domain.User;
+import com.worzech.inventorymanagementsystem.model.User.UserDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
 
     User findUserByUsername(String username);
 

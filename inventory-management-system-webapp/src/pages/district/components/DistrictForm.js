@@ -26,6 +26,8 @@ export default function DistrictForm(props) {
   const [projects, setProjects] = React.useState(props.district.projects);
   const selectableProjects = props.selectableProjects;
 
+  const [user, setUser] = React.useState(props.district.owner);
+
   const [districtNameError, setDistrictNameError] = React.useState(false);
   const [districtNameErrorMessage, setDistrictNameErrorMessage] =
     React.useState("");
@@ -38,18 +40,14 @@ export default function DistrictForm(props) {
     setDistrictNameError(false);
     setDistrictNameErrorMessage("");
 
-    const districtpost = {
-      districtName: districtName,
-      projects: projects,
-      owner: "admin",
-    };
     const district = {
       districtName: districtName,
       projects: projects,
+      owner: user.username,
     };
     if (!props.district.id) {
       axios
-        .post("http://localhost:8080/district/newDistrict", districtpost, {
+        .post("http://localhost:8080/district/newDistrict", district, {
           headers: {
             Authorization: "Bearer " + authCtx.token,
           },
@@ -135,18 +133,55 @@ export default function DistrictForm(props) {
                 <TextField
                   error={districtNameError}
                   helperText={districtNameErrorMessage}
-                  id="filled-search"
+                  id="districtName"
                   label="Nazwa regionu"
                   name="districtName"
                   defaultValue={districtName}
                   onChange={(e) => setDistrictName(e.target.value)}
                 />
               </Grid>
+
+              <Grid item>
+                <Autocomplete
+                  id="coordinator"
+                  disableClearable
+                  disableCloseOnSelect
+                  options={props.users}
+                  onChange={(event, value) => setUser(value)}
+                  getOptionLabel={(option) => option.username}
+                  defaultValue={props.users.find(
+                    (user) => user.username === props.district.owner
+                  )}
+                  ListboxProps={{
+                    style: { maxHeight: "16rem" },
+                  }}
+                  style={{ width: 500 }}
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                      <Checkbox
+                        icon=<CheckBoxOutlineBlankIcon fontSize="small" />
+                        checkedIcon=<CheckBoxIcon fontSize="small" />
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.username}
+                    </li>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Koordynator"
+                      placeholder="Szukaj"
+                    />
+                  )}
+                />
+              </Grid>
+
               <Grid item>
                 {selectableProjects.length > 0 ? (
                   <Autocomplete
                     multiple
-                    id="checkboxes-tags-demo"
+                    id="projects"
                     disableCloseOnSelect
                     noOptionsText="Brak wolnych projektów"
                     options={selectableProjects}
@@ -183,7 +218,7 @@ export default function DistrictForm(props) {
                 ) : (
                   <TextField
                     disabled
-                    id="outlined-disabled"
+                    id="noProjects"
                     label="Projekty"
                     defaultValue="Brak wolnych projektów"
                   />

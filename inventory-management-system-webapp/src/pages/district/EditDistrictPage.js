@@ -19,11 +19,19 @@ export default function EditDistrictPage() {
     "http://localhost:8080/project/" + editedDistrict.id + "/projectsForEdit"
   );
 
+  const {
+    error: errorUsers,
+    isPending: isPendingUsers,
+    data: users,
+  } = useGet("http://localhost:8080/user/");
+
   return (
     <React.Fragment>
-      {isProjectsForEdit && <CircularProgress color="success" />}
-      {errorProjectsForEdit && <ErrorPage />}
-      {projectsForEdit && (
+      {(isProjectsForEdit || isPendingUsers) && (
+        <CircularProgress color="success" />
+      )}
+      {(errorProjectsForEdit || errorUsers) && <ErrorPage />}
+      {projectsForEdit && users && (
         <Grid container direction="column" alignItems={"center"}>
           <Grid item marginTop={2} marginBottom={2}>
             <Typography>EDYCJA REGIONU</Typography>
@@ -32,6 +40,7 @@ export default function EditDistrictPage() {
             <DistrictForm
               selectableProjects={projectsForEdit}
               district={editedDistrict}
+              users={users}
             />
           </Grid>
         </Grid>

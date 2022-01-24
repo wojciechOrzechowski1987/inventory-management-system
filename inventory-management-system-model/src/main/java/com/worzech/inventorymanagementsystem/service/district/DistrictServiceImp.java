@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class DistrictServiceImp implements DistrictService {
 
     private final DistrictNewAndEditMapper districtNewAndEditMapper;
@@ -105,6 +107,7 @@ public class DistrictServiceImp implements DistrictService {
     private DistrictNewAndEditDto updateAndReturnDto(Long id, DistrictNewAndEditDto districtNewAndEditDto) {
         District district = districtRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         district.setDistrictName(districtNewAndEditDto.getDistrictName());
+        district.setOwner(districtNewAndEditDto.getOwner());
         removeProjectsFromDistrict(district, district.getProjects());
         if (districtNewAndEditDto.getProjects().size() != 0) {
             districtNewAndEditDto.getProjects().iterator().forEachRemaining(project -> district
