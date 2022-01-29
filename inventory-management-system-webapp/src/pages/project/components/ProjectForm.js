@@ -155,7 +155,6 @@ export default function ProjectForm(props) {
             </Grid>
             <Grid item>
               <Autocomplete
-                disableClearable
                 options={props.districts}
                 getOptionLabel={(option) =>
                   option.districtName ? option.districtName : ""

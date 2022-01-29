@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -35,13 +36,13 @@ public class DemandController {
     @PostMapping(path = "newDemand", consumes = "application/json")
     @PreAuthorize("hasAuthority('demand:write')")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandNewAndEditDto createNewDemand(@RequestBody DemandNewAndEditDto demandNewAndEditDto) {
+    public DemandNewAndEditDto createNewDemand(@Valid @RequestBody DemandNewAndEditDto demandNewAndEditDto) {
         return demandService.createNewDemand(demandNewAndEditDto);
     }
 
     @PutMapping(path = "/editDemand/{id}", consumes = "application/json")
     @PreAuthorize("hasAuthority('demand:update')")
-    public DemandNewAndEditDto editDemand(@PathVariable Long id, @RequestBody DemandNewAndEditDto demandNewAndEditDto) {
+    public DemandNewAndEditDto editDemand(@PathVariable Long id, @Valid @RequestBody DemandNewAndEditDto demandNewAndEditDto) {
         return demandService.updateDemand(id, demandNewAndEditDto);
     }
 

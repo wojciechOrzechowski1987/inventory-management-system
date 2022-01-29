@@ -25,9 +25,7 @@ export default function DistrictForm(props) {
   const authCtx = useContext(AuthContext);
   const [projects, setProjects] = React.useState(props.district.projects);
   const selectableProjects = props.selectableProjects;
-
   const [user, setUser] = React.useState(props.district.owner);
-
   const [districtNameError, setDistrictNameError] = React.useState(false);
   const [districtNameErrorMessage, setDistrictNameErrorMessage] =
     React.useState("");
@@ -43,7 +41,7 @@ export default function DistrictForm(props) {
     const district = {
       districtName: districtName,
       projects: projects,
-      owner: user.username,
+      owner: user,
     };
     if (!props.district.id) {
       axios
@@ -147,7 +145,7 @@ export default function DistrictForm(props) {
                   disableClearable
                   disableCloseOnSelect
                   options={props.users}
-                  onChange={(event, value) => setUser(value)}
+                  onChange={(event, value) => setUser(value.username)}
                   getOptionLabel={(option) => option.username}
                   defaultValue={props.users.find(
                     (user) => user.username === props.district.owner

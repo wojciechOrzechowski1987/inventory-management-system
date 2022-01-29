@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,20 +28,9 @@ public class DemandPopcMaterialController {
     @PostMapping(path = "newDemandPopcMaterial", consumes = "application/json")
     @PreAuthorize("hasAuthority('demand:write')")
     @ResponseStatus(HttpStatus.CREATED)
-    public DemandPopcMaterialNewAndEditDto createNewDemandPopcMaterial(@RequestBody DemandPopcMaterialNewAndEditDto demandPopcMaterialNewAndEditDto) {
+    public DemandPopcMaterialNewAndEditDto createNewDemandPopcMaterial( @Valid @RequestBody DemandPopcMaterialNewAndEditDto demandPopcMaterialNewAndEditDto) {
         return demandPopcMaterialService.createNewDemandPopcMaterial(demandPopcMaterialNewAndEditDto);
     }
 
-   /* @GetMapping("id/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public DemandPopcMaterialNewAndEditDto getDemandPopcMaterialById(@PathVariable Long id) {
-        return demandPopcMaterialService.getDemandPopcMaterialById(id);
-    }
-
-    @PostMapping(path= "newDemandPopcMaterial", consumes ="application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public DemandPopcMaterialNewAndEditDto createNewDemandPopcMaterial(@RequestBody DemandPopcMaterialNewAndEditDto demandPopcMaterialDto) {
-        return demandPopcMaterialService.createNewDemand(demandPopcMaterialDto);
-    }*/
 
 }

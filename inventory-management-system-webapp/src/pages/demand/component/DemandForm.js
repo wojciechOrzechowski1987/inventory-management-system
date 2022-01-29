@@ -16,12 +16,23 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import Box from "@mui/material/Box";
 import React, { useContext } from "react";
 import AuthContext from "../../../auth/AuthContex";
+import { Alert } from "@mui/lab";
 
 export default function DemandForm(props) {
   const theme = useTheme();
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
   const isNew = props.demand.demandName === "";
+
+  const [projectError, setProjectError] = React.useState(false);
+  const [projectErrorMessage, setProjectErrrorMessage] = React.useState("");
+
+  const [demandPopcMaterialListError, setDemandPopcMaterialListError] =
+    React.useState(false);
+  const [
+    demandPopcMaterialListErrorMessage,
+    setDemandPopcMaterialListErrrorMessage,
+  ] = React.useState("");
 
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
@@ -39,6 +50,7 @@ export default function DemandForm(props) {
 
   const onSubmit = (data) => {
     if (!props.demand.id) {
+      console.log(data);
       axios
         .post("http://localhost:8080/demand/newDemand", data, {
           headers: {
@@ -47,6 +59,20 @@ export default function DemandForm(props) {
         })
         .then(() => {
           navigate(-1);
+        })
+        .catch((error) => {
+          if (error.response.data.fieldErrors) {
+            error.response.data.fieldErrors.forEach((fieldError) => {
+              if (fieldError.field === "projectName") {
+                setProjectError(true);
+                setProjectErrrorMessage(fieldError.message);
+              }
+              if (fieldError.field === "demandPopcMaterials") {
+                setDemandPopcMaterialListError(true);
+                setDemandPopcMaterialListErrrorMessage(fieldError.message);
+              }
+            });
+          }
         });
     } else {
       axios
@@ -95,6 +121,7 @@ export default function DemandForm(props) {
                   control={control}
                   render={({ field: { onChange } }) => (
                     <Autocomplete
+                      disableClearable
                       options={props.projects}
                       getOptionLabel={(option) =>
                         option.projectName ? option.projectName : ""
@@ -105,11 +132,20 @@ export default function DemandForm(props) {
                       )}
                       onChange={(e, value) => {
                         value !== null
-                          ? onChange(value.projectName)
+                          ? onChange(
+                              value.projectName,
+                              setProjectError(false),
+                              setProjectErrrorMessage("")
+                            )
                           : onChange(null);
                       }}
                       renderInput={(params) => (
-                        <TextField {...params} label="Projekt" />
+                        <TextField
+                          {...params}
+                          label="Projekt"
+                          error={projectError}
+                          helperText={projectErrorMessage}
+                        />
                       )}
                     />
                   )}
@@ -155,8 +191,10 @@ export default function DemandForm(props) {
                     <Controller
                       name={`demandPopcMaterials.${index}.popcMaterialCode`}
                       control={control}
+                      rules={{ required: true }}
                       render={({ field: { onChange } }) => (
                         <Autocomplete
+                          disableClearable
                           size={"small"}
                           fullWidth
                           options={props.popcMaterials}
@@ -178,7 +216,22 @@ export default function DemandForm(props) {
                               : onChange(null);
                           }}
                           renderInput={(params) => (
-                            <TextField {...params} label="Materiał" />
+                            <TextField
+                              {...params}
+                              label="Materiał POPC"
+                              error={
+                                !getValues(
+                                  `demandPopcMaterials.${index}.popcMaterialCode`
+                                )
+                              }
+                              helperText={
+                                !getValues(
+                                  `demandPopcMaterials.${index}.popcMaterialCode`
+                                )
+                                  ? "Wybierz materiał"
+                                  : ""
+                              }
+                            />
                           )}
                         />
                       )}
@@ -188,6 +241,7 @@ export default function DemandForm(props) {
                       render={({ field }) => (
                         <TextField
                           disabled
+                          label="Materiał POPC"
                           size="small"
                           defaultValue={getValues(
                             `demandPopcMaterials.${index}.popcMaterialCode`
@@ -207,6 +261,14 @@ export default function DemandForm(props) {
                           label="Ilość"
                           size="small"
                           {...field}
+                          error={
+                            !getValues(`demandPopcMaterials.${index}.quantity`)
+                          }
+                          helperText={
+                            !getValues(`demandPopcMaterials.${index}.quantity`)
+                              ? "Wpisz ilość"
+                              : ""
+                          }
                         />
                       )}
                       name={`demandPopcMaterials.${index}.quantity`}
@@ -244,7 +306,12 @@ export default function DemandForm(props) {
                 </Stack>
               );
             })}
-            <Stack direction="row" justifyContent="flex-start" sx={{ m: 1 }}>
+            <Stack
+              direction="row"
+              justifyContent="flex-start"
+              spacing={2}
+              sx={{ m: 1 }}
+            >
               {(isNew || authCtx.authorities.includes("ROLE_ADMIN")) && (
                 <Button
                   size="small"
@@ -253,10 +320,24 @@ export default function DemandForm(props) {
                   endIcon={<AddBoxIcon />}
                   onClick={() => {
                     append({ popcMaterialCode: "", quantity: "" });
+                    setDemandPopcMaterialListError(false);
                   }}
                 >
-                  Dodaj materiał
+                  Dodaj materiał POPC
                 </Button>
+              )}
+              {demandPopcMaterialListError && (
+                <Alert
+                  sx={{
+                    maxHeight: 30.75,
+                    padding: 0,
+                    backgroundColor: theme.palette.primary.light,
+                    color: "error.main",
+                  }}
+                  severity="error"
+                >
+                  {demandPopcMaterialListErrorMessage}
+                </Alert>
               )}
             </Stack>
             <Grid item>

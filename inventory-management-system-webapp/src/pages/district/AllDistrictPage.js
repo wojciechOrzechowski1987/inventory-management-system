@@ -41,6 +41,7 @@ const AllDistrictPage = () => {
             <Typography>STATUS - REGIONY</Typography>
           </Grid>
           <Grid
+            key={"secondary"}
             container
             direction="row"
             alignItems="center"

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,11 @@ public class DemandNewAndEditDto {
     private String createDate;
     private String demandName;
     private String projectCode;
+    @NotEmpty(message = "Proszę wybrać projekt")
     private String projectName;
     private Status demandStatus;
-    private List<DemandPopcMaterialBasicDto> demandPopcMaterials = new ArrayList<>();
+    @NotEmpty(message = "Zapotrzebowanie musi zawierać materiały")
+    private List<@Valid DemandPopcMaterialBasicDto> demandPopcMaterials = new ArrayList<>();
 
 
 }
