@@ -22,6 +22,9 @@ export default function PopcMaterialGroupForm(props) {
   const [groupName, setGroupName] = React.useState(props.group.popcGroupName);
   const [subgroups, setSubgroups] = React.useState([]);
 
+  const [groupNameError, setGroupNameError] = React.useState(false);
+  const [groupNameErrorMessage, setGroupNameErrorMessage] = React.useState("");
+
   const theme = useTheme();
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -43,6 +46,19 @@ export default function PopcMaterialGroupForm(props) {
         })
         .then(() => {
           navigate(-1);
+        })
+        .catch((error) => {
+          if (error.response.data.fieldErrors) {
+            error.response.data.fieldErrors.forEach((fieldError) => {
+              if (
+                fieldError.field === "popcGroupName" ||
+                fieldError.field === "unique"
+              ) {
+                setGroupNameError(true);
+                setGroupNameErrorMessage(fieldError.message);
+              }
+            });
+          }
         });
     } else {
       axios
@@ -57,6 +73,19 @@ export default function PopcMaterialGroupForm(props) {
         )
         .then(() => {
           navigate(-1);
+        })
+        .catch((error) => {
+          if (error.response.data.fieldErrors) {
+            error.response.data.fieldErrors.forEach((fieldError) => {
+              if (
+                fieldError.field === "popcGroupName" ||
+                fieldError.field === "unique"
+              ) {
+                setGroupNameError(true);
+                setGroupNameErrorMessage(fieldError.message);
+              }
+            });
+          }
         });
     }
   };
@@ -89,6 +118,8 @@ export default function PopcMaterialGroupForm(props) {
                 name="groupName"
                 value={groupName}
                 onChange={(e) => setGroupName(e.target.value)}
+                error={groupNameError}
+                helperText={groupNameErrorMessage}
               />
             </Grid>
             <Grid item>

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,15 +35,15 @@ public class PurchaseController {
     @PostMapping(path = "newPurchase", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public PurchaseDto createNewPurchase(@RequestBody PurchaseDto purchaseDto) {
+    public PurchaseDto createNewPurchase(@Valid @RequestBody PurchaseDto purchaseDto) {
         return purchaseService.createNewPurchase(purchaseDto);
     }
 
-    @PutMapping(path = "/editPurchase/{id}", consumes = "application/json")
+    /*@PutMapping(path = "/editPurchase/{id}", consumes = "application/json")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public PurchaseDto editDemand(@PathVariable Long id, @RequestBody PurchaseDto purchaseDto) {
         return purchaseService.updatePurchase(id, purchaseDto);
-    }
+    }*/
 
     @DeleteMapping("/delete/{orderId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

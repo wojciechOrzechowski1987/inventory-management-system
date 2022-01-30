@@ -24,22 +24,4 @@ public class PurchaseProductItemlController {
         return purchaseProductItemService.getAllPurchaseProductItems();
     }
 
-   /* @PostMapping(path= "newDemandPopcMaterial", consumes ="application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public DemandPopcMaterialNewAndEditDto createNewDemandPopcMaterial(@RequestBody DemandPopcMaterialNewAndEditDto demandPopcMaterialDto) {
-        return demandPopcMaterialService.createNewDemandPopcMaterial(demandPopcMaterialDto);
-    }*/
-
-   /* @GetMapping("id/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public DemandPopcMaterialNewAndEditDto getDemandPopcMaterialById(@PathVariable Long id) {
-        return demandPopcMaterialService.getDemandPopcMaterialById(id);
-    }
-
-    @PostMapping(path= "newDemandPopcMaterial", consumes ="application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public DemandPopcMaterialNewAndEditDto createNewDemandPopcMaterial(@RequestBody DemandPopcMaterialNewAndEditDto demandPopcMaterialDto) {
-        return demandPopcMaterialService.createNewDemand(demandPopcMaterialDto);
-    }*/
-
 }

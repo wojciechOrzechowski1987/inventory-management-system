@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -69,13 +70,13 @@ public class PopcSubgroupController {
     @PostMapping(path = "/newSubgroup", consumes = "application/json")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public PopcSubgroupNewAndEditDto createNewPopcSubroup(@RequestBody PopcSubgroupNewAndEditDto popcSubgroupNewAndEditDto) {
+    public PopcSubgroupNewAndEditDto createNewPopcSubroup(@Valid @RequestBody PopcSubgroupNewAndEditDto popcSubgroupNewAndEditDto) {
         return popcSubgroupService.createNewPopcSubgroup(popcSubgroupNewAndEditDto);
     }
 
     @PutMapping(path = "/editSubgroup/{id}", consumes = "application/json")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public PopcSubgroupNewAndEditDto editPopcSubgroup(@PathVariable Long id, @RequestBody PopcSubgroupNewAndEditDto popcSubgroupNewAndEditDto) {
+    public PopcSubgroupNewAndEditDto editPopcSubgroup(@PathVariable Long id, @Valid @RequestBody PopcSubgroupNewAndEditDto popcSubgroupNewAndEditDto) {
         return popcSubgroupService.updatePopcSubgroup(id, popcSubgroupNewAndEditDto);
     }
 

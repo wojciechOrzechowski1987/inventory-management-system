@@ -89,7 +89,7 @@ public class ProjectController {
     @PutMapping(path = "/editProject/{id}", consumes = "application/json")
     @PreAuthorize("hasAuthority('project:update')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProjectNewAndEditDto editProject(@PathVariable Long id, @RequestBody ProjectNewAndEditDto projectDto) {
+    public ProjectNewAndEditDto editProject(@PathVariable Long id, @Valid @RequestBody ProjectNewAndEditDto projectDto) {
         return projectService.updateProject(id, projectDto);
     }
 

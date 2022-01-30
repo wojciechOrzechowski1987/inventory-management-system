@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -49,13 +50,13 @@ public class PopcGroupController {
     @PostMapping(path = "/newGroup", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public PopcGroupNewAndEditDto createNewPopcGroup(@RequestBody PopcGroupNewAndEditDto popcGroupNewAndEditDto) {
+    public PopcGroupNewAndEditDto createNewPopcGroup(@Valid @RequestBody PopcGroupNewAndEditDto popcGroupNewAndEditDto) {
         return popcGroupService.createNewPopcGroup(popcGroupNewAndEditDto);
     }
 
     @PutMapping(path = "/editGroup/{id}", consumes = "application/json")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public PopcGroupNewAndEditDto editPopcGroup(@PathVariable Long id, @RequestBody PopcGroupNewAndEditDto popcGroupNewAndEditDto) {
+    public PopcGroupNewAndEditDto editPopcGroup(@PathVariable Long id, @Valid @RequestBody PopcGroupNewAndEditDto popcGroupNewAndEditDto) {
         return popcGroupService.updatePopcGroup(id, popcGroupNewAndEditDto);
     }
 

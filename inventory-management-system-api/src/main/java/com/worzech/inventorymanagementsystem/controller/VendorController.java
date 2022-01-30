@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -58,13 +59,13 @@ public class VendorController {
     @PostMapping(path = "/newVendor", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public VendorNewAndEditDto createNewVendor(@RequestBody VendorNewAndEditDto vendorDto) {
+    public VendorNewAndEditDto createNewVendor(@Valid @RequestBody VendorNewAndEditDto vendorDto) {
         return vendorService.createNewVendor(vendorDto);
     }
 
     @PutMapping(path = "/editVendor/{id}", consumes = "application/json")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public VendorNewAndEditDto updateVendor(@PathVariable Long id, @RequestBody VendorNewAndEditDto vendorDto) {
+    public VendorNewAndEditDto updateVendor(@PathVariable Long id, @Valid @RequestBody VendorNewAndEditDto vendorDto) {
         return vendorService.updateVendor(id, vendorDto);
     }
 

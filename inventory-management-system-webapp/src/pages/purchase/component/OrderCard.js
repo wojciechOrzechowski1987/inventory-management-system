@@ -77,7 +77,18 @@ export default function OrderCard(props) {
                             : onChange(null);
                         }}
                         renderInput={(params) => (
-                          <TextField {...params} label="Materiał" />
+                          <TextField
+                            {...params}
+                            label="Materiał"
+                            error={
+                              !getValues(`productItems.${index}.popc3Code`)
+                            }
+                            helperText={
+                              !getValues(`productItems.${index}.popc3Code`)
+                                ? "Wybierz materiał"
+                                : ""
+                            }
+                          />
                         )}
                       />
                     )}
@@ -110,7 +121,16 @@ export default function OrderCard(props) {
                             : onChange(null);
                         }}
                         renderInput={(params) => (
-                          <TextField {...params} label="Dostawca" />
+                          <TextField
+                            {...params}
+                            label="Dostawca"
+                            error={!getValues(`productItems.${index}.vendor`)}
+                            helperText={
+                              !getValues(`productItems.${index}.vendor`)
+                                ? "Wybierz dostawcę"
+                                : ""
+                            }
+                          />
                         )}
                       />
                     )}
@@ -144,7 +164,18 @@ export default function OrderCard(props) {
                             : onChange(null);
                         }}
                         renderInput={(params) => (
-                          <TextField {...params} label="Produkt" />
+                          <TextField
+                            {...params}
+                            label="Produkt"
+                            error={
+                              !getValues(`productItems.${index}.productItem`)
+                            }
+                            helperText={
+                              !getValues(`productItems.${index}.productItem`)
+                                ? "Wybierz produkt"
+                                : ""
+                            }
+                          />
                         )}
                       />
                     )}
@@ -157,6 +188,12 @@ export default function OrderCard(props) {
                         label="Ilość"
                         size="small"
                         {...field}
+                        error={!getValues(`productItems.${index}.quantity`)}
+                        helperText={
+                          !getValues(`productItems.${index}.quantity`)
+                            ? "Wpisz ilość"
+                            : ""
+                        }
                       />
                     )}
                     name={`productItems.${index}.quantity`}

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -74,13 +75,13 @@ public class ProductItemController {
     @PostMapping(path = "/newProductItem", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ProductItemNewAndEditDto createNewProductItem(@RequestBody ProductItemNewAndEditDto productItemNewAndEditDto) {
+    public ProductItemNewAndEditDto createNewProductItem(@Valid @RequestBody ProductItemNewAndEditDto productItemNewAndEditDto) {
         return productItemService.createNewProductItem(productItemNewAndEditDto);
     }
 
     @PutMapping(path = "/editProductItem/{id}", consumes = "application/json")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ProductItemNewAndEditDto editProductItem(@PathVariable Long id, @RequestBody ProductItemNewAndEditDto productItemNewAndEditDto) {
+    public ProductItemNewAndEditDto editProductItem(@PathVariable Long id, @Valid @RequestBody ProductItemNewAndEditDto productItemNewAndEditDto) {
         return productItemService.updateProductItem(id, productItemNewAndEditDto);
     }
 

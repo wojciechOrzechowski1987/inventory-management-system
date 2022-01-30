@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -61,13 +62,13 @@ public class PopcMaterialController {
     @PostMapping(path = "/newMaterial", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public PopcMaterialNewAndEditDto createNewPopcMaterial(@RequestBody PopcMaterialNewAndEditDto popcMaterialNewAndEditDto) {
+    public PopcMaterialNewAndEditDto createNewPopcMaterial(@Valid @RequestBody PopcMaterialNewAndEditDto popcMaterialNewAndEditDto) {
         return popcMaterialService.createNewPopcMaterial(popcMaterialNewAndEditDto);
     }
 
     @PutMapping(path = "/editMaterial/{id}", consumes = "application/json")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public PopcMaterialNewAndEditDto editDistrict(@PathVariable Long id, @RequestBody PopcMaterialNewAndEditDto popcMaterialNewAndEditDto) {
+    public PopcMaterialNewAndEditDto editDistrict(@PathVariable Long id, @Valid @RequestBody PopcMaterialNewAndEditDto popcMaterialNewAndEditDto) {
         return popcMaterialService.updatePopcMaterial(id, popcMaterialNewAndEditDto);
     }
 }
